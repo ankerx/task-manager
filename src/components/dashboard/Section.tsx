@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { useState } from "react";
 import { Board } from "./Board";
 
@@ -13,19 +14,19 @@ export interface ITask {
 export const Section = () => {
   const tasksData: ITask[] = [
     {
-      id: "1",
+      id: nanoid(),
       title: "Design app",
       description: "very fast",
       category: "to do",
     },
     {
-      id: "2",
+      id: nanoid(),
       title: "Write tests",
       description: "important",
       category: "review",
     },
     {
-      id: "3",
+      id: nanoid(),
       title: "Make a coffee",
       description: "with milk",
       category: "in progress",

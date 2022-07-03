@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, SetStateAction, useState } from "react";
 import { CreateTask } from "../task/CreateTask";
 import { ITask, Sections } from "./Section";
 import { Task } from "../task/Task";
@@ -7,7 +7,7 @@ import { nanoid } from "nanoid";
 interface IProps {
   tasks: ITask[];
   sectionName: Sections;
-  setTasks: (task: any) => void;
+  setTasks: React.Dispatch<SetStateAction<ITask[]>>;
 }
 export const Board = ({ tasks, sectionName, setTasks }: IProps) => {
   const [showModal, setShowModal] = useState(false);
@@ -45,22 +45,28 @@ export const Board = ({ tasks, sectionName, setTasks }: IProps) => {
       prevTasks.filter((task) => task.id !== id)
     );
   };
+  console.log(tasks);
+
   const editTask = (
     id: string,
     title: string,
     description: string,
     category: string
   ) => {
-    const updatedTask = tasks.find((task) => task.id === id);
-
-    if (!updatedTask) return;
-
-    updatedTask.title = title;
-    updatedTask.description = description;
-    updatedTask.category = category;
-
-    setTasks((prevTasks: ITask[]) => [...prevTasks, { updatedTask }]);
-
+    setTasks((prevState) => {
+      const newState = prevState.map((task) => {
+        if (task.id === id) {
+          return {
+            ...task,
+            title: title,
+            description: description,
+            category: category,
+          };
+        }
+        return task;
+      });
+      return newState;
+    });
     setShowEditModal(false);
   };
 
@@ -89,6 +95,11 @@ export const Board = ({ tasks, sectionName, setTasks }: IProps) => {
             />
           );
         })}
+        {tasks.length === 0 && (
+          <div className="flex justify-between p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 my-5 cursor-pointer">
+            <button onClick={() => setShowModal(true)}>Add first task</button>
+          </div>
+        )}
       </div>
       {showModal && (
         <CreateTask
