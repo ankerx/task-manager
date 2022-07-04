@@ -7,9 +7,17 @@ import { nanoid } from "nanoid";
 interface IProps {
   tasks: ITask[];
   sectionName: Sections;
+  addTask: (tasks: ITask) => void;
+  deleteTask: (id: string) => void;
   setTasks: React.Dispatch<SetStateAction<ITask[]>>;
 }
-export const Board = ({ tasks, sectionName, setTasks }: IProps) => {
+export const Board = ({
+  tasks,
+  sectionName,
+  addTask,
+  deleteTask,
+  setTasks,
+}: IProps) => {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const initialState = {
@@ -22,6 +30,7 @@ export const Board = ({ tasks, sectionName, setTasks }: IProps) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
+
     setTaskFormData({
       ...taskFormData,
       [name]: value,
@@ -35,17 +44,13 @@ export const Board = ({ tasks, sectionName, setTasks }: IProps) => {
       description: taskFormData.description,
       category: sectionName,
     };
-    setTasks((prevTasks: ITask[]) => [...prevTasks, newTask]);
+
+    addTask(newTask);
+
     setTaskFormData(initialState);
+
     setShowModal(false);
   };
-
-  const deleteTask = (id: string) => {
-    setTasks((prevTasks: ITask[]) =>
-      prevTasks.filter((task) => task.id !== id)
-    );
-  };
-  console.log(tasks);
 
   const editTask = (
     id: string,
@@ -96,8 +101,11 @@ export const Board = ({ tasks, sectionName, setTasks }: IProps) => {
           );
         })}
         {tasks.length === 0 && (
-          <div className="flex justify-between p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 my-5 cursor-pointer">
-            <button onClick={() => setShowModal(true)}>Add first task</button>
+          <div
+            className="flex justify-between p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 my-5 cursor-pointer"
+            onClick={() => setShowModal(true)}
+          >
+            <button>Add first task</button>
           </div>
         )}
       </div>

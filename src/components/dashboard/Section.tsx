@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { useState } from "react";
 import { Board } from "./Board";
 
-const sections = ["to do", "in progress", "review", "done"] as const;
+export const sections = ["to do", "in progress", "review", "done"] as const;
 export type Sections = typeof sections[number];
 
 export interface ITask {
@@ -35,21 +35,34 @@ export const Section = () => {
 
   const [tasks, setTasks] = useState(tasksData);
 
+  const addTask = (tasks: ITask) => {
+    setTasks((prevTasks) => [...prevTasks, tasks]);
+  };
+
+  const deleteTask = (id: string) => {
+    setTasks((prevTasks: ITask[]) =>
+      prevTasks.filter((task) => task.id !== id)
+    );
+  };
+
   return (
     <div className="text-center mt-5">
       <h1 className="text-3xl text-blue-600">Task manager app</h1>
 
-      <div className="flex justify-center gap-5">
+      <div className="flex justify-center gap-5 ">
         {sections.map((section, index) => {
           const filteredData: ITask[] = tasks.filter(
             (task) => task.category === section
           );
+          console.log(filteredData);
 
           return (
             <Board
               key={index}
               sectionName={section}
               tasks={filteredData}
+              addTask={addTask}
+              deleteTask={deleteTask}
               setTasks={setTasks}
             />
           );

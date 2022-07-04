@@ -1,4 +1,5 @@
 import React from "react";
+
 import { FormData } from "./EditTask";
 
 interface Props {
@@ -44,7 +45,7 @@ export const EditTaskForm = ({
           onChange={handleSelectChange}
           defaultValue={category}
         >
-          {sections.map((section: string, index) => {
+          {sections.map((section, index) => {
             return (
               <option value={section} key={index}>
                 {section}

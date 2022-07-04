@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { ChangeEvent, useState } from "react";
-
 import { EditTaskForm } from "./EditTaskForm";
 import { Sections } from "../dashboard/Section";
 
