@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
 import { useState } from "react";
+import { useTask } from "../../context/useTask";
 import { Board } from "./Board";
 
 export const sections = ["to do", "in progress", "review", "done"] as const;
@@ -12,28 +12,9 @@ export interface ITask {
   category: string;
 }
 export const Section = () => {
-  const tasksData: ITask[] = [
-    {
-      id: nanoid(),
-      title: "Design app",
-      description: "very fast",
-      category: "to do",
-    },
-    {
-      id: nanoid(),
-      title: "Write tests",
-      description: "important",
-      category: "review",
-    },
-    {
-      id: nanoid(),
-      title: "Make a coffee",
-      description: "with milk",
-      category: "in progress",
-    },
-  ];
+  const { tasks: data } = useTask();
 
-  const [tasks, setTasks] = useState(tasksData);
+  const [tasks, setTasks] = useState(data);
 
   const addTask = (tasks: ITask) => {
     setTasks((prevTasks) => [...prevTasks, tasks]);
@@ -51,10 +32,9 @@ export const Section = () => {
 
       <div className="flex justify-center gap-5 ">
         {sections.map((section, index) => {
-          const filteredData: ITask[] = tasks.filter(
+          const filteredData: ITask[] = data.filter(
             (task) => task.category === section
           );
-          console.log(filteredData);
 
           return (
             <Board

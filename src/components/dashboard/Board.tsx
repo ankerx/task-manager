@@ -1,9 +1,10 @@
-import { ChangeEvent, SetStateAction, useState } from "react";
+import { ChangeEvent, SetStateAction, useContext, useState } from "react";
 import { CreateTask } from "../task/CreateTask";
 import { ITask, Sections } from "./Section";
 import { Task } from "../task/Task";
 import { nanoid } from "nanoid";
-
+import { useTask } from "../../context/useTask";
+import { TaskContext } from "../../context/task-context";
 interface IProps {
   tasks: ITask[];
   sectionName: Sections;
@@ -18,6 +19,9 @@ export const Board = ({
   deleteTask,
   setTasks,
 }: IProps) => {
+  const { tasks: data, addTask: saveTask } = useTask();
+  console.log(data);
+
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const initialState = {
@@ -45,8 +49,8 @@ export const Board = ({
       category: sectionName,
     };
 
-    addTask(newTask);
-
+    // addTask(newTask);
+    saveTask(newTask);
     setTaskFormData(initialState);
 
     setShowModal(false);

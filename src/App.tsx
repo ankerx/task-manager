@@ -1,9 +1,11 @@
 import { Section } from "./components/dashboard/Section";
-
+import TaskProvider from "./context/task-context";
 export const App = () => {
   return (
-    <div>
-      <Section />
-    </div>
+    <TaskProvider>
+      <div>
+        <Section />
+      </div>
+    </TaskProvider>
   );
 };
