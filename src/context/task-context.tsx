@@ -8,7 +8,7 @@ type taskContextType = {
 };
 type TaskProviderProps = { readonly children: React.ReactNode };
 
-const initialState = { tasks: [] };
+const initialState: State = { tasks: [] };
 
 export const TaskContext = createContext<taskContextType>({
   state: initialState,
