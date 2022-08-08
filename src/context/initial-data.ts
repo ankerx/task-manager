@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
+import { ITask } from "../components/dashboard/Section";
 
-export const initialData = [
+export const initialData: ITask[] = [
   {
     id: nanoid(),
     title: "Design app",
