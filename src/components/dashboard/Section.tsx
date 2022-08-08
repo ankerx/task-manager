@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { initialData } from "../../context/initial-data";
 import { useTask } from "../../context/useTask";
 import { Board } from "./Board";
 
@@ -12,9 +13,9 @@ export interface ITask {
   category: string;
 }
 export const Section = () => {
-  const { tasks: data } = useTask();
+  // const { tasks: data } = useTask();
 
-  const [tasks, setTasks] = useState(data);
+  const [tasks, setTasks] = useState(initialData);
 
   const addTask = (tasks: ITask) => {
     setTasks((prevTasks) => [...prevTasks, tasks]);
@@ -32,7 +33,7 @@ export const Section = () => {
 
       <div className="flex justify-center gap-5 ">
         {sections.map((section, index) => {
-          const filteredData: ITask[] = data.filter(
+          const filteredData: ITask[] = tasks.filter(
             (task) => task.category === section
           );
 

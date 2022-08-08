@@ -19,8 +19,8 @@ export const Board = ({
   deleteTask,
   setTasks,
 }: IProps) => {
-  const { tasks: data, addTask: saveTask } = useTask();
-  console.log(data);
+  // const { tasks: data, addTask: saveTask } = useTask();
+  // console.log(data);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -49,8 +49,8 @@ export const Board = ({
       category: sectionName,
     };
 
-    // addTask(newTask);
-    saveTask(newTask);
+    addTask(newTask);
+    // saveTask(newTask);
     setTaskFormData(initialState);
 
     setShowModal(false);

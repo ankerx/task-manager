@@ -1,11 +1,12 @@
 import { nanoid } from "nanoid";
-import { Action, State } from "./types";
+import { ITask } from "../components/dashboard/Section";
+import { Action } from "./types";
 
-export const taskReducer = ({ tasks }: State, action: Action) => {
+export const taskReducer = (state: ITask[], action: Action) => {
   switch (action.type) {
     case "ADD_TASK":
       return [
-        ...tasks,
+        ...state,
         {
           id: nanoid(),
           title: action.payload.title,
@@ -14,8 +15,8 @@ export const taskReducer = ({ tasks }: State, action: Action) => {
         },
       ];
     case "REMOVE_TASK":
-      return [...tasks.filter((task) => task.id !== action.payload)];
+      return [...state.filter((task) => task.id !== action.payload)];
     default:
-      return tasks;
+      return state;
   }
 };
