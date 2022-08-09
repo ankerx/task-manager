@@ -8,12 +8,7 @@ interface Props extends ITask {
   deleteTask: (id: string) => void;
   setShowEditModal: (showModal: boolean) => void;
   showEditModal: boolean;
-  editTask: (
-    id: string,
-    title: string,
-    description: string,
-    category: string
-  ) => void;
+  editTask: (task: ITask) => void;
 }
 export const Task = ({
   title,

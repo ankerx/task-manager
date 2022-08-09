@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { ChangeEvent, useState } from "react";
 import { EditTaskForm } from "./EditTaskForm";
-import { Sections } from "../dashboard/Section";
+import { ITask, Sections } from "../dashboard/Section";
 
 export type FormData = {
   title: string;
@@ -14,12 +14,7 @@ interface Props {
   id: string;
   formData: FormData;
   category: string;
-  editTask: (
-    id: string,
-    title: string,
-    description: string,
-    category: string
-  ) => void;
+  editTask: (task: ITask) => void;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -38,6 +33,12 @@ export const EditTask = ({
   };
 
   const [selectedValue, setSelectedValue] = useState(category);
+  const task: ITask = {
+    id: id,
+    title: formData.title,
+    description: formData.description,
+    category: selectedValue,
+  };
   return (
     <>
       <div className="justify-center items-center flex flex-grow overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -62,14 +63,7 @@ export const EditTask = ({
             />
             <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
               <button
-                onClick={() =>
-                  editTask(
-                    id,
-                    formData.title,
-                    formData.description,
-                    selectedValue
-                  )
-                }
+                onClick={() => editTask(task)}
                 className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
               >

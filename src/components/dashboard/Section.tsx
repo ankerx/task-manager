@@ -13,19 +13,12 @@ export interface ITask {
   category: string;
 }
 export const Section = () => {
-  // const { tasks: data } = useTask();
-
-  const [tasks, setTasks] = useState(initialData);
-
-  const addTask = (tasks: ITask) => {
-    setTasks((prevTasks) => [...prevTasks, tasks]);
-  };
+  const { state: data, dispatch } = useTask();
 
   const deleteTask = (id: string) => {
-    setTasks((prevTasks: ITask[]) =>
-      prevTasks.filter((task) => task.id !== id)
-    );
+    dispatch({ type: "REMOVE_TASK", payload: id });
   };
+  console.log(data);
 
   return (
     <div className="text-center mt-5">
@@ -33,7 +26,7 @@ export const Section = () => {
 
       <div className="flex justify-center gap-5 ">
         {sections.map((section, index) => {
-          const filteredData: ITask[] = tasks.filter(
+          const filteredData: ITask[] = data.filter(
             (task) => task.category === section
           );
 
@@ -42,9 +35,7 @@ export const Section = () => {
               key={index}
               sectionName={section}
               tasks={filteredData}
-              addTask={addTask}
               deleteTask={deleteTask}
-              setTasks={setTasks}
             />
           );
         })}

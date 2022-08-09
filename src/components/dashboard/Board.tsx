@@ -8,19 +8,15 @@ import { TaskContext } from "../../context/task-context";
 interface IProps {
   tasks: ITask[];
   sectionName: Sections;
-  addTask: (tasks: ITask) => void;
   deleteTask: (id: string) => void;
-  setTasks: React.Dispatch<SetStateAction<ITask[]>>;
 }
 export const Board = ({
   tasks,
   sectionName,
-  addTask,
+  // addTask,
   deleteTask,
-  setTasks,
 }: IProps) => {
-  const { state: data, dispatch: saveTask } = useTask();
-  console.log(data);
+  const { dispatch } = useTask();
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -49,33 +45,14 @@ export const Board = ({
       category: sectionName,
     };
 
-    // addTask(newTask);
-    saveTask(newTask);
+    dispatch({ type: "ADD_TASK", payload: newTask });
     setTaskFormData(initialState);
 
     setShowModal(false);
   };
 
-  const editTask = (
-    id: string,
-    title: string,
-    description: string,
-    category: string
-  ) => {
-    setTasks((prevState) => {
-      const newState = prevState.map((task) => {
-        if (task.id === id) {
-          return {
-            ...task,
-            title: title,
-            description: description,
-            category: category,
-          };
-        }
-        return task;
-      });
-      return newState;
-    });
+  const editTask = (task: ITask) => {
+    dispatch({ type: "EDIT_TASK", payload: task });
     setShowEditModal(false);
   };
 
