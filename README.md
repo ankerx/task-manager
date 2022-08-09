@@ -1,1 +1,1 @@
-crud app with typescript react and tailwind
+crud app with typescript react, contextapi and tailwind
