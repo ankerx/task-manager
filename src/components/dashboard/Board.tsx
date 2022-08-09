@@ -1,25 +1,21 @@
-import { ChangeEvent, SetStateAction, useContext, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { CreateTask } from "../task/CreateTask";
 import { ITask, Sections } from "./Section";
 import { Task } from "../task/Task";
 import { nanoid } from "nanoid";
 import { useTask } from "../../context/useTask";
-import { TaskContext } from "../../context/task-context";
+
 interface IProps {
   tasks: ITask[];
   sectionName: Sections;
   deleteTask: (id: string) => void;
 }
-export const Board = ({
-  tasks,
-  sectionName,
-  // addTask,
-  deleteTask,
-}: IProps) => {
+export const Board = ({ tasks, sectionName }: IProps) => {
   const { dispatch } = useTask();
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+
   const initialState = {
     id: "",
     title: "",
@@ -74,7 +70,6 @@ export const Board = ({
               description={task.description}
               category={task.category}
               title={task.title}
-              deleteTask={deleteTask}
               setShowEditModal={setShowEditModal}
               showEditModal={showEditModal}
               editTask={editTask}

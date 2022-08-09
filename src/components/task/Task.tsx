@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { EditTask } from "./EditTask";
 import { ChangeEvent, useState } from "react";
+import { useTask } from "../../context/useTask";
 
 interface Props extends ITask {
-  deleteTask: (id: string) => void;
   setShowEditModal: (showModal: boolean) => void;
   showEditModal: boolean;
   editTask: (task: ITask) => void;
@@ -15,16 +15,19 @@ export const Task = ({
   id,
   description,
   category,
-  deleteTask,
   showEditModal,
   setShowEditModal,
   editTask,
 }: Props) => {
+  const { dispatch } = useTask();
+
   const [formData, setFormData] = useState({
     title: title,
     description: description,
   });
-
+  const deleteTask = (id: string) => {
+    dispatch({ type: "REMOVE_TASK", payload: id });
+  };
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
 

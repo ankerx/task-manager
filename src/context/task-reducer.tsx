@@ -18,7 +18,6 @@ export const taskReducer = (state: ITask[], action: Action) => {
       return [...state.filter((task) => task.id !== action.payload)];
     case "EDIT_TASK":
       const updatedTask = action.payload;
-      console.log(updatedTask);
 
       const updatedTasks = state.map((task) => {
         if (task.id === updatedTask.id) {
@@ -26,8 +25,9 @@ export const taskReducer = (state: ITask[], action: Action) => {
         }
         return task;
       });
-      console.log(updatedTasks);
-      return { ...state, updatedTasks };
+
+      return updatedTasks;
+
     default:
       throw new Error(`Unhandled action type`);
   }

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { initialData } from "../../context/initial-data";
 import { useTask } from "../../context/useTask";
 import { Board } from "./Board";
 
@@ -18,7 +16,6 @@ export const Section = () => {
   const deleteTask = (id: string) => {
     dispatch({ type: "REMOVE_TASK", payload: id });
   };
-  console.log(data);
 
   return (
     <div className="text-center mt-5">
